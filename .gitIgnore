@@ -1,0 +1,6 @@
+# Archivos a ignorar
+Lista ligada.vcxproj.*
+Lista ligada.vcxproj
+
+# Carpetas a Ignorar
+/Debug/
