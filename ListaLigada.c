@@ -42,9 +42,66 @@ void insert(char dato)
 	}
 }
 
+char remueve(void)
+{
+	nodo *recorre, *last;
+	char dato = '\0';			//   dato
+	if(raiz == NULL)	//  La lista esta vacía no hay nada que remover
+		return dato;
+	recorre = last = raiz;
+	if(last -> sig == NULL && last == raiz)	// Es una lista de 1 nodo?
+	{
+		dato = last -> info;	// PReservo el campo info
+		free(last);			// Libero la memoria reservada por malloc()
+		raiz = NULL;		// Se vuelve una lista vacía
+	}
+	else
+	{
+		while( last -> sig != NULL) //  es el ultimo nodo
+		{
+			recorre = last;			// Emparejo recorre
+			last = last -> sig;		// last avanza al siguiente nodo
+		}
+		dato = last -> info;	// PReservo el campo info
+		free(last);			// Libero la memoria reservada por malloc()
+		recorre ->sig = NULL;		// Se vuelve wl ultimo nodo
+	}
+	return dato;
+}
+
+void imprimeLista(void)
+{
+	nodo *recorre = raiz;
+	while( recorre != NULL)
+	{
+		printf("%c, ", recorre -> info );
+		recorre = recorre -> sig;
+	}
+	printf("\n\n");
+}
+
 int main()
 {
-	printf("nodo tiene in tamaño de %d bytes\n", sizeof(nodo));
+	insert('R');
+	insert('o');
+	insert('b');
+	insert('e');
+	insert('r');
+	insert('t');
+	insert('o');
+
+	imprimeLista();
+
+	printf("Sale -> %c \n",remueve());
+	printf("Sale -> %c \n",remueve());
+
+	imprimeLista();
+
+	insert('T');
+	insert('O');
+
+	imprimeLista();
+
 	system("pause");
 	return 0;
 }
