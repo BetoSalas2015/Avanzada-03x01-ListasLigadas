@@ -42,30 +42,39 @@ void insert(char dato)
 	}
 }
 
-char remueve(void)
+
+void insertPrimero(char dato)
 {
-	nodo *recorre, *last;
-	char dato = '\0';			//   dato
-	if(raiz == NULL)	//  La lista esta vacía no hay nada que remover
-		return dato;
-	recorre = last = raiz;
-	if(last -> sig == NULL && last == raiz)	// Es una lista de 1 nodo?
+	nodo *nuevo = NULL;
+	nuevo = (nodo *) malloc( sizeof(nodo) ); // Creamos el nodo
+	if(nuevo == NULL)			// no hubo memoria libre
 	{
-		dato = last -> info;	// PReservo el campo info
-		free(last);			// Libero la memoria reservada por malloc()
-		raiz = NULL;		// Se vuelve una lista vacía
+		printf("No hay memoria disponible\n");
+		exit(1);		//  Forzamos a que el programa termine
+	}
+	if(raiz == NULL)
+	{
+		nuevo ->info = dato;	//  Preservamos el dato en nodo
+		nuevo ->sig = NULL;		// se vuelve el último nodo;
+		raiz = nuevo;			// raiz guarda la dirección de nuevo
 	}
 	else
 	{
-		while( last -> sig != NULL) //  es el ultimo nodo
-		{
-			recorre = last;			// Emparejo recorre
-			last = last -> sig;		// last avanza al siguiente nodo
-		}
-		dato = last -> info;	// PReservo el campo info
-		free(last);			// Libero la memoria reservada por malloc()
-		recorre ->sig = NULL;		// Se vuelve wl ultimo nodo
+		nuevo ->info = dato;	//  Preservamos el dato en nodo
+		nuevo ->sig = raiz;		// se vuelve el último nodo;
+		raiz = nuevo;			// raiz guarda la dirección de nuevo
 	}
+}
+
+char remueve(void)
+{
+	nodo *elimina = raiz;
+	char dato = '\0';			//   dato
+	if(raiz == NULL)	//  La lista esta vacía no hay nada que remover
+		return dato;
+	dato = raiz -> info;	// PReservo el campo info
+	raiz = raiz -> sig;
+	free(elimina);			// Libero la memoria reservada por malloc()
 	return dato;
 }
 
@@ -82,13 +91,13 @@ void imprimeLista(void)
 
 int main()
 {
-	insert('R');
-	insert('o');
-	insert('b');
-	insert('e');
-	insert('r');
-	insert('t');
-	insert('o');
+	insertPrimero('R');
+	insertPrimero('o');
+	insertPrimero('b');
+	insertPrimero('e');
+	insertPrimero('r');
+	insertPrimero('t');
+	insertPrimero('o');
 
 	imprimeLista();
 
@@ -97,8 +106,8 @@ int main()
 
 	imprimeLista();
 
-	insert('T');
-	insert('O');
+	insertPrimero('T');
+	insertPrimero('O');
 
 	imprimeLista();
 
